@@ -6,7 +6,7 @@
  * Time: 1:39 PM
  */
 
-namespace IAM\RestOrmBundle\Doctrine\ORM;
+namespace Ucsf\RestOrmBundle\Doctrine\ORM;
 
 
 use Doctrine\ORM\AbstractQuery;

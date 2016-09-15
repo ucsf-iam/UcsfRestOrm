@@ -1,0 +1,23 @@
+ucsf_rest_orm:
+    connections:
+        typicode:
+            base_uri: http://jsonplaceholder.typicode.com/
+            username:
+            password:
+    entity_managers:
+        typicode_em:
+            connection: typicode
+            commands:
+                get_post:
+                    method: GET
+                    path: posts/{{id}}
+                    class: Ucsf\RestOrmBundle\Tests\Post
+            repositories:
+                Ucsf\RestOrmBundle\Tests\Post:
+                    find:
+                        byId:
+                            method: GET
+                            path: posts/{{id}}
+                    persist:
+                        method: POST
+                        path: posts

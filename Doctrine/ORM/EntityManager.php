@@ -1,20 +1,20 @@
 <?php
-namespace IAM\RestOrmBundle\Doctrine\ORM;
+namespace Ucsf\RestOrmBundle\Doctrine\ORM;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Setup;
-use IAM\RestOrmBundle\Components\TwigString;
-use IAM\RestOrmBundle\Doctrine\DBAL\Driver\REST\RESTConnection;
-use IAM\RestOrmBundle\Doctrine\ORM\GuestStdClass;
-use IAM\RestOrmBundle\Exception\RestOrmException;
-use IAM\RestOrmBundle\Doctrine\DBAL\Driver\REST\Driver;
+use Ucsf\RestOrmBundle\Components\TwigString;
+use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\RESTConnection;
+use Ucsf\RestOrmBundle\Doctrine\ORM\GuestStdClass;
+use Ucsf\RestOrmBundle\Exception\RestOrmException;
+use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\Driver;
 
 /**
  * Class EntityManager
  *
  * A custom Doctrine-line entity manager for REST services
  *
- * @package IAM\RestOrmBundle\Doctrine
+ * @package Ucsf\RestOrmBundle\Doctrine
  * @author Jason Gabler <jason.gabler@ucsf.edu>
  */
 class EntityManager {
@@ -34,7 +34,7 @@ class EntityManager {
      * @param $entityManagerName The name of the RestOrm entity manager as defined in the config.yml section for RestOrm.
      * @param string $restObjectClass The name of the class for initial storage of REST objects. Defaults to \stdClass.
      */
-    public function __construct($config, $logger, $entityManagerName, $restObjectClass = '\\stdClass')
+    public function __construct($config, $entityManagerName, $restObjectClass = '\\stdClass', $logger = null)
     {
         // Get Doctrine driver
         $this->doctrineEntityManager = \Doctrine\ORM\EntityManager::create(
@@ -140,7 +140,9 @@ class EntityManager {
                 $json
             );
         } catch (\Exception $e) {
-            $this->logger->error('Could not persist: '.$json);
+            if ($logger) {
+                $this->logger->error('Could not persist: ' . $json);
+            }
             throw $e;
         }
         return $this->hydrateEntities($entityClass, $responseObjects);

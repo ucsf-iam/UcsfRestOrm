@@ -6,14 +6,14 @@
  * Time: 11:30 PM
  */
 
-namespace IAM\RestOrmBundle\Components;
+namespace Ucsf\RestOrmBundle\Components;
 
 /**
  * Class TwigString
  *
  * A component of standalone Twig utilities
  *
- * @package IAM\RestOrmBundle\Components
+ * @package Ucsf\RestOrmBundle\Components
  */
 class TwigString implements \Twig_LoaderInterface {
     public function getSource($name)

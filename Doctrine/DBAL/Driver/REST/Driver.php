@@ -1,8 +1,8 @@
 <?php
 
-namespace IAM\RestOrmBundle\Doctrine\DBAL\Driver\REST;
+namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 
-use IAM\RestOrmBundle\Doctrine\DBAL\Driver\AbstractRESTDriver;
+use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\AbstractRESTDriver;
 
 /**
  * A Doctrine DBAL driver for the Oracle OCI8 PHP extensions.

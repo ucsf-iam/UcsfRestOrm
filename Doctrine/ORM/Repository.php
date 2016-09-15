@@ -6,7 +6,7 @@
  * Time: 3:31 PM
  */
 
-namespace IAM\RestOrmBundle\Doctrine\ORM;
+namespace Ucsf\RestOrmBundle\Doctrine\ORM;
 
 
 class Repository

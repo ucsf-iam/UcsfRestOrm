@@ -1,11 +1,11 @@
 <?php
 
-namespace IAM\RestOrmBundle\Doctrine\DBAL\Driver\REST;
+namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 
 use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use GuzzleHttp\Client;
-use IAM\RestOrmBundle\Components\TwigString;
+use Ucsf\RestOrmBundle\Components\TwigString;
 use RAPL\RAPL\Client\GuzzleClient;
 
 /**

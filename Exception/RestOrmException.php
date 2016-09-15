@@ -6,7 +6,7 @@
  * Time: 4:47 PM
  */
 
-namespace IAM\RestOrmBundle\Exception;
+namespace Ucsf\RestOrmBundle\Exception;
 
 
 class RestOrmException extends \Exception {}

@@ -1,15 +1,15 @@
 <?php
-namespace IAM\RestOrmBundle\Doctrine\DBAL\Driver\REST;
+namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 
 use GuzzleHttp\Client;
-use IAM\RestOrmBundle\Components\TwigString;
+use Ucsf\RestOrmBundle\Components\TwigString;
 use IteratorAggregate;
 use Doctrine\DBAL\Driver\Statement;
 use Traversable;
 
 /**
  * Class RESTStatement
- * @package IAM\RestOrmBundle\DBAL\Driver\REST
+ * @package Ucsf\RestOrmBundle\DBAL\Driver\REST
  * @author Jason Gabler <jason.gabler@ucsf.edu>
  */
 class RESTStatement implements \IteratorAggregate, Statement
@@ -178,6 +178,7 @@ class RESTStatement implements \IteratorAggregate, Statement
     {
         $renderedUri = (new TwigString())->render($this->uri, $variables);
 
+        $renderedUri = 'http://jsonplaceholder.typicode.com/posts/1';
         $response = null;
         try {
             $response = $this->client->request($this->method, $renderedUri);

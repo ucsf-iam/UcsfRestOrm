@@ -6,7 +6,7 @@
  * Time: 11:33 AM
  */
 
-namespace IAM\RestOrmBundle\Doctrine\DBAL\Platforms;
+namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Platforms;
 
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;

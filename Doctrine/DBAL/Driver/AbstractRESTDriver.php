@@ -1,14 +1,14 @@
 <?php
-namespace IAM\RestOrmBundle\Doctrine\DBAL\Driver;
+namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Exception;
-use IAM\RestOrmBundle\Doctrine\DBAL\Platforms\RESTPlatform;
+use Ucsf\RestOrmBundle\Doctrine\DBAL\Platforms\RESTPlatform;
 
 /**
  * Class AbstractRESTDriver
- * @package IAM\RestOrmBundle\Doctrine\DBAL\Driver
+ * @package Ucsf\RestOrmBundle\Doctrine\DBAL\Driver
  * @author Jason Gabler <jason.gabler@ucsf.edu>
  */
 abstract class AbstractRESTDriver implements Driver, Driver\ExceptionConverterDriver
