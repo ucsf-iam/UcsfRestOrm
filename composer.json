@@ -12,11 +12,11 @@
     ],
     "require": {
         "php": ">=5.6",
-        "symfony/http-kernel": ">=2.*",
-        "symfony/dependency-injection": ">=2.*",
-        "symfony/framework-bundle": ">=2.*",
-        "symfony/class-loader": ">=2.*",
-        "symfony/yaml": ">=2.*"
+        "symfony/http-kernel": ">=2.6",
+        "symfony/dependency-injection": ">=2.6",
+        "symfony/framework-bundle": ">=2.6",
+        "symfony/class-loader": ">=2.6",
+        "symfony/yaml": ">=2.6"
     },
     "autoload": {
         "psr-0": { "Ucsf\\RestOrmBundle": "" }
