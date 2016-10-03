@@ -1,5 +1,5 @@
 {
-    "name" : "ucsf/restowm-bundle",
+    "name" : "ucsf/restorm-bundle",
     "description" : "REST-based ORM for Symfony - Obtain objects from a REST service... just like using an ORM",
     "type" : "symfony-bundle",
     "authors" : [{
