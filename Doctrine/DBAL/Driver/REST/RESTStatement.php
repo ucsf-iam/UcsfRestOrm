@@ -177,8 +177,6 @@ class RESTStatement implements \IteratorAggregate, Statement
     function execute($variables = array())
     {
         $renderedUri = (new TwigString())->render($this->uri, $variables);
-
-        $renderedUri = 'http://jsonplaceholder.typicode.com/posts/1';
         $response = null;
         try {
             $response = $this->client->request($this->method, $renderedUri);

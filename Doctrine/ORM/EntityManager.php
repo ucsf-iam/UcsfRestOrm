@@ -5,9 +5,9 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Setup;
 use Ucsf\RestOrmBundle\Components\TwigString;
 use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\RESTConnection;
-use Ucsf\RestOrmBundle\Doctrine\ORM\GuestStdClass;
 use Ucsf\RestOrmBundle\Exception\RestOrmException;
 use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\Driver;
+use Ucsf\RestOrmBundle\RestStdClass;
 
 /**
  * Class EntityManager
@@ -24,17 +24,13 @@ class EntityManager {
     protected $repositories;
     protected $doctrineEntityManager; // A true Doctrine entity manager for gathering entity metadata
     protected $twig; // For parsing REST URI variables, e.g. /some/path/object/{{ id }}
-    protected $restObjectClass;
-    protected $logger;
 
     /**
      * EntityManager constructor.
      * @param $config Config.yml section.
-     * @param $logger Symfony logger service.
      * @param $entityManagerName The name of the RestOrm entity manager as defined in the config.yml section for RestOrm.
-     * @param string $restObjectClass The name of the class for initial storage of REST objects. Defaults to \stdClass.
      */
-    public function __construct($config, $entityManagerName, $restObjectClass = '\\stdClass', $logger = null)
+    public function __construct($connection, $repositories, $commands)
     {
         // Get Doctrine driver
         $this->doctrineEntityManager = \Doctrine\ORM\EntityManager::create(
@@ -42,22 +38,9 @@ class EntityManager {
             Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/src'), false, null, null, FALSE)
         );
         $this->twig = new TwigString();
-        $this->restObjectClass = $restObjectClass;
-        $this->logger = $logger;
 
-        // Get the configuration for this entity manager
-        if (empty($config['entity_managers'][$entityManagerName])) {
-            throw new RestOrmException('Cannot find RestOrm entity manager "'.$entityManagerName.'"');
-        }
-        $this->config = $config['entity_managers'][$entityManagerName];
-        $this->commands = empty($this->config['commands']) ? array() : $this->config['commands'];
-        $this->repositories = empty($this->config['repositories']) ? array() : $this->config['repositories'];
-        if (empty($config['connections'][$this->config['connection']])) {
-            throw new RestOrmException('Cannot find connection "'.$this->config['connection'].'" for RestOrm entity manager "'.$entityManagerName.'"');
-        }
-
-        // Creat the connection for this entity manager
-        $connection = $config['connections'][$this->config['connection']];
+        $this->commands = $commands;
+        $this->repositories = $repositories;
         $this->connection = new RESTConnection($connection['base_uri'], $connection['username'], $connection['password']);
     }
 
@@ -132,19 +115,12 @@ class EntityManager {
         $persistConfig = $this->repositories[$entityClass]['persist'];
         $objects = $this->hydrateObjects($entity);
         $json = json_encode($objects);
-        try {
-            $responseObjects = $this->connection->persist(
-                $persistConfig['path'],
-                empty($method) ? $persistConfig['method'] : $method,
-                $variables,
-                $json
-            );
-        } catch (\Exception $e) {
-            if ($logger) {
-                $this->logger->error('Could not persist: ' . $json);
-            }
-            throw $e;
-        }
+        $responseObjects = $this->connection->persist(
+            $persistConfig['path'],
+            empty($method) ? $persistConfig['method'] : $method,
+            $variables,
+            $json
+        );
         return $this->hydrateEntities($entityClass, $responseObjects);
     }
 
@@ -174,8 +150,7 @@ class EntityManager {
         $restObjects = array();
         $metadata = $this->doctrineEntityManager->getClassMetadata($entityName);
         foreach($entities as $entity) {
-            $restObjectClass = $this->restObjectClass;
-            $restObject = new $restObjectClass();
+            $restObject = new RestStdClass();
 
             // Copy scalar database columns into analogous object columns
             foreach ($metadata->getColumnNames() as $columnName) {

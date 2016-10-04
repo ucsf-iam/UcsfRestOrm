@@ -1,3 +1,7 @@
 services:
-    rest_entity_manager:
+    ucsf_rest_orm_entity_manager:
         class: Ucsf\RestOrmBundle\Doctrine\ORM\EntityManager
+        arguments:
+            config: %ucsf_rest_orm_config%
+
+
