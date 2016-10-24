@@ -23,7 +23,5 @@
         "psr-0": { "Ucsf\\RestOrmBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "Ucsf/RestOrmBundle",
-    "extra": {
-    }
+    "target-dir": "Ucsf/RestOrmBundle"
 }
