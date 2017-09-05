@@ -3,7 +3,6 @@ namespace Ucsf\RestOrmBundle\Doctrine\ORM;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Setup;
-use Ucsf\RestOrmBundle\Components\TwigString;
 use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\RESTConnection;
 use Ucsf\RestOrmBundle\Exception\RestOrmException;
 use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\Driver;
@@ -23,7 +22,6 @@ class EntityManager {
     protected $commands;
     protected $repositories;
     protected $doctrineEntityManager; // A true Doctrine entity manager for gathering entity metadata
-    protected $twig; // For parsing REST URI variables, e.g. /some/path/object/{{ id }}
 
     /**
      * EntityManager constructor.
@@ -37,8 +35,6 @@ class EntityManager {
             array('driverClass' => Driver::class),
             Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/src'), false, null, null, FALSE)
         );
-        $this->twig = new TwigString();
-
         $this->commands = $commands;
         $this->repositories = $repositories;
         $this->connection = new RESTConnection($connection['base_uri'], $connection['username'], $connection['password']);

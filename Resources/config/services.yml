@@ -2,6 +2,6 @@ services:
     ucsf_rest_orm_entity_manager:
         class: Ucsf\RestOrmBundle\Doctrine\ORM\EntityManager
         arguments:
-            - %ucsf_rest_orm_config%
+            - "%ucsf_rest_orm_config%"
 
 

@@ -2,7 +2,7 @@
 namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 
 use GuzzleHttp\Client;
-use Ucsf\RestOrmBundle\Components\TwigString;
+use Ucsf\RestOrmBundle\Util;
 use IteratorAggregate;
 use Doctrine\DBAL\Driver\Statement;
 use Traversable;
@@ -176,7 +176,7 @@ class RESTStatement implements \IteratorAggregate, Statement
      */
     function execute($variables = array())
     {
-        $renderedUri = (new TwigString())->render($this->uri, $variables);
+        $renderedUri = Util::twigRender($this->uri, $variables);
         $response = null;
         try {
             $response = $this->client->request($this->method, $renderedUri);
@@ -184,7 +184,6 @@ class RESTStatement implements \IteratorAggregate, Statement
         } catch (\Exception $e) {
             $this->currentErrorCode = 1;
             $this->currentErrorInfo = $e->getMessage();
-//            return FALSE;
             throw $e;
         }
         return TRUE;

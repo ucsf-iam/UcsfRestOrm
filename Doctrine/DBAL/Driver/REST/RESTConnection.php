@@ -5,8 +5,9 @@ namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 use Doctrine\DBAL\Driver\Connection;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use GuzzleHttp\Client;
-use Ucsf\RestOrmBundle\Components\TwigString;
 use RAPL\RAPL\Client\GuzzleClient;
+use Ucsf\RestOrmBundle\Util;
+
 
 /**
  * OCI8 implementation of the Connection interface.
@@ -26,6 +27,9 @@ class RESTConnection implements Connection, ServerInfoAwareConnection
      */
     protected $client;
 
+
+    protected $twig;
+
     /**
      * @param $baseUri Base URI, used to prefix relative paths used when creating statements
      * @param $username Basic authentication username
@@ -34,6 +38,8 @@ class RESTConnection implements Connection, ServerInfoAwareConnection
      */
     public function __construct($baseUri, $username, $password, $verifyCertificate = FALSE)
     {
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Array());
+
         $this->client = new Client([
             'base_uri' => $baseUri,
             'auth' => [$username, $password],
@@ -44,7 +50,8 @@ class RESTConnection implements Connection, ServerInfoAwareConnection
 
     public function persist($uri, $method, $variables = null, $data = null) {
         $variables = empty($variables) ? array() : $variables;
-        $renderedUri = (new TwigString())->render($uri, $variables);
+        $renderedUri = Util::twigRender($uri, $variables);
+
 
         if (empty($data)) {
             $response = $this->client->request($method, $renderedUri);

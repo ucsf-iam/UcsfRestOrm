@@ -8,21 +8,24 @@
 
 namespace Ucsf\RestOrmBundle\Tests;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Yaml\Yaml;
-use Ucsf\RestOrmBundle\Tests\DatabaseTestCase;
 
-class PostServiceTest extends DatabaseTestCase
+class PostServiceTest extends WebTestCase
 {
     private $config;
     private $service;
 
     public function setUp()
     {
-        parent::setUp();
+        $kernel = static::bootKernel();
+        $container = $kernel->getContainer();
+
         $locator = new FileLocator(__DIR__);
         $restOrmConfigFiles = $locator->locate('config.yml', null, false);
         $this->config = Yaml::parse(file_get_contents($restOrmConfigFiles[0]));
+
         $this->service = new PostService($this->config['ucsf_rest_orm']);
     }
 
