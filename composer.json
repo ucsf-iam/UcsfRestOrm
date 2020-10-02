@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "php": ">=5.6.14",
-        "symfony/symfony": "^3.0",
+        "php": ">=7.1.33",
+        "symfony/framework-bundle": "^5.1",
         "guzzlehttp/guzzle": "^6.1"
     },
     "autoload": {
