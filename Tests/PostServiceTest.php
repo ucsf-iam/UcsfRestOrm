@@ -17,7 +17,7 @@ class PostServiceTest extends WebTestCase
     private $config;
     private $service;
 
-    public function setUp()
+    public function setUp(): void
     {
         $kernel = static::bootKernel();
         $container = $kernel->getContainer();

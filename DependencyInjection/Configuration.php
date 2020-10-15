@@ -17,10 +17,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ucsf_rest_orm');
+        $treeBuilder = new TreeBuilder('ucsf_rest_orm');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('connections')->isRequired()->cannotBeEmpty()
                     ->useAttributeAsKey('name')

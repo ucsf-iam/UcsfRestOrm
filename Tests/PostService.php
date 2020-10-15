@@ -19,12 +19,18 @@ class PostService
     
     public function __construct($config)
     {
-        $typicode_config = $config['entity_managers']['typicode_em'];
-        $this->entityManager = new EntityManager(
-            $config['connections']['typicode'],
-            $config['entity_managers']['typicode_em']['repositories'],
-            $config['entity_managers']['typicode_em']['commands']
-        );
+//        $typicode_config = $config['entity_managers']['typicode_em'];
+//        $this->entityManager = new EntityManager(
+//            $config['connections']['typicode'],
+//            $config['entity_managers']['typicode_em']['repositories'],
+//            $config['entity_managers']['typicode_em']['commands']
+//        );
+
+
+        $this->entityManager = new EntityManager($config, 'typicode_em');
+
+
+
         $this->postRepository = $this->entityManager->getRepository(Post::class);
     }
 

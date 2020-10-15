@@ -28,16 +28,40 @@ class EntityManager {
      * @param $config Config.yml section.
      * @param $entityManagerName The name of the RestOrm entity manager as defined in the config.yml section for RestOrm.
      */
-    public function __construct($connection, $repositories, $commands)
+    public function __construct($config, $entityManagerName)
     {
+        if (!isset($config['entity_managers'][$entityManagerName])) {
+            throw new RestOrmException('RestOrm cannot find an entity manager definition of  "'.$entityManagerName.'"');
+        }
+        $em = $config['entity_managers'][$entityManagerName];
+
+        if (!isset($em['connection'])) {
+            throw new RestOrmException('RestOrm entity manager "'.$entityManagerName.'" configuration does not have a defined connection');
+        }
+        $connectionName = $em['connection'];
+
+        if (!isset($config['connections'][$connectionName])) {
+            throw new RestOrmException('RestOrm entity manager connection "'.$connectionName.'" is not defined for "'.$entityManagerName.'"');
+        }
+        $connection = $config['connections'][$connectionName];
+
+        if (!isset($em['repositories'])) {
+            throw new RestOrmException('RestOrm entity manager "'.$entityManagerName.'" configuration does not have defined repositories');
+        }
+        $this->repositories = $em['repositories'];
+
+        if (!isset($em['commands'])) {
+            throw new RestOrmException('RestOrm entity manager "'.$entityManagerName.'" configuration does not have defined commands');
+        }
+        $this->commands = $em['commands'];
+
         // Get Doctrine driver
         $this->doctrineEntityManager = \Doctrine\ORM\EntityManager::create(
             array('driverClass' => Driver::class),
             Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/src'), false, null, null, FALSE)
         );
-        $this->commands = $commands;
-        $this->repositories = $repositories;
-        $this->connection = new RESTConnection($connection['base_uri'], $connection['username'], $connection['password']);
+
+        $this->connection = new RESTConnection($connection['base_uri'], $connection['username'], $connection['password'], FALSE);
     }
 
     public function getRepository($entityName)

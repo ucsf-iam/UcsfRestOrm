@@ -38,8 +38,6 @@ class RESTConnection implements Connection, ServerInfoAwareConnection
      */
     public function __construct($baseUri, $username, $password, $verifyCertificate = FALSE)
     {
-        $this->twig = new \Twig_Environment(new \Twig_Loader_Array());
-
         $this->client = new Client([
             'base_uri' => $baseUri,
             'auth' => [$username, $password],

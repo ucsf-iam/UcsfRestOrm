@@ -15,17 +15,13 @@ class Util {
             return json_decode($exception->getResponse()->getBody()->getContents());
     }
 
-    public static function twigRender($templateString = null, $variables = null) {
-        if (!$templateString) {
-            return FALSE;
-        }
-        if (!$variables) {
-            return $templateString;
-        }
+    public static function twigRender($templateString = '', $variables = []) {
+        $loader = new \Twig\Loader\ArrayLoader([
+            'template.html' => $templateString,
+        ]);
+        $twig = new \Twig\Environment($loader);
 
-        $twig = new \Twig_Environment(new \Twig_Loader_Array());
-        $template = $twig->createTemplate($templateString);
-        return $template->render($variables);
+        return $twig->render('template.html', $variables);
     }
     
 }

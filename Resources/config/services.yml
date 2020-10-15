@@ -1,7 +1,12 @@
+#services:
+#    ucsf_rest_orm_entity_manager:
+#        class: Ucsf\RestOrmBundle\Doctrine\ORM\EntityManager
+#        arguments:
+#            - "%ucsf_rest_orm_config%"
+
 services:
-    ucsf_rest_orm_entity_manager:
+    ucsf_rest_orm.typicode_em:
         class: Ucsf\RestOrmBundle\Doctrine\ORM\EntityManager
         arguments:
             - "%ucsf_rest_orm_config%"
-
-
+            - "typicode_em"

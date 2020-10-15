@@ -89,7 +89,7 @@ class RESTStatement implements \IteratorAggregate, Statement
      *
      * @see PDO::FETCH_* constants.
      */
-    public function fetch($fetchMode = null)
+    public function fetch($fetchMode = null, $cursorOrientation = PDO::FETCH_ORI_NEXT, $cursorOffset = 0)
     {
         // TODO: Implement fetch() method.
         throw new \Exception(__METHOD__. '() is not yet implemented.');
@@ -106,7 +106,7 @@ class RESTStatement implements \IteratorAggregate, Statement
      *
      * @see PDO::FETCH_* constants.
      */
-    public function fetchAll($fetchMode = null)
+    public function fetchAll($fetchMode = null, $fetchArgument = null, $ctorArgs = null)
     {
         return $this->objects;
     }
