@@ -2,8 +2,10 @@
 namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Connection as DBALConnection;
 use Doctrine\DBAL\Driver;
-use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST\RESTExceptionConverter;
 use Ucsf\RestOrmBundle\Doctrine\DBAL\Platforms\RESTPlatform;
 
 /**
@@ -11,7 +13,7 @@ use Ucsf\RestOrmBundle\Doctrine\DBAL\Platforms\RESTPlatform;
  * @package Ucsf\RestOrmBundle\Doctrine\DBAL\Driver
  * @author Jason Gabler <jason.gabler@ucsf.edu>
  */
-abstract class AbstractRESTDriver implements Driver, Driver\ExceptionConverterDriver
+abstract class AbstractRESTDriver implements Driver
 {
     /**
      * Gets the SchemaManager that can be used to inspect and change the underlying
@@ -21,7 +23,7 @@ abstract class AbstractRESTDriver implements Driver, Driver\ExceptionConverterDr
      *
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
      */
-    public function getSchemaManager(Connection $conn)
+    public function getSchemaManager(DBALConnection $conn, AbstractPlatform $platform)
     {
         // TODO: Implement getSchemaManager() method.
     }
@@ -64,6 +66,12 @@ abstract class AbstractRESTDriver implements Driver, Driver\ExceptionConverterDr
     {
         // TODO: Implement convertException() method.
     }
+
+    public function getExceptionConverter(): Driver\API\ExceptionConverter
+    {
+        return new RESTExceptionConverter();
+    }
+
 
 
 }

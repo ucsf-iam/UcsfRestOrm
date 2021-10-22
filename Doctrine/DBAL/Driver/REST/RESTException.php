@@ -2,14 +2,14 @@
 
 namespace Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST;
 
-use Doctrine\DBAL\Driver\AbstractDriverException;
+use Doctrine\DBAL\Driver\AbstractException;
 
 /**
  * Class RESTException
  * @package Ucsf\RestOrmBundle\Doctrine\DBAL\Driver\REST
  * @author Jason Gabler <jason.gabler@ucsf.edu>
  */
-class RESTException extends AbstractDriverException
+class RESTException extends AbstractException
 {
     /**
      * @param array $error
